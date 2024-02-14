@@ -1,0 +1,114 @@
+*** Shell Pseudocode Document ***
+
+
+
+1. Core shell functionality
+    
+    already written in full
+
+
+2. Built-in commands
+
+    already written in full
+
+
+3. Program execution from shell
+    
+    start_process_function(args): 
+
+        fork() to start child process
+
+        if child, execv() with arguments passed to function
+
+        if parent, waitpid() -> tell parent to wait for child process 
+
+    
+    // still trying to figure out path variables 
+
+
+
+4. I/O redirection
+
+    parse command tokens for < , << , >, >>, signaling redirection commands
+
+
+    input redirection " < " 
+
+        open() input file, read only
+
+        dup2() system call to duplicate file descriptor returned by open() to STDIN_FILENO
+
+        close() original file descriptor
+
+
+    output redirection " > "
+        
+        open() output file to open existing or create output file in write only mode ( O_WRONLY, O_CREAT, O_TRUNC )
+
+        dup2() to duplicate file descriptor returned by open() to STDOUT_FILENO 
+        
+        close() original file descriptor
+
+        
+        if appending " >> " use O_APPEND flag instead of O_TRUNC 
+    
+        
+        fork() 
+
+        execv(args) 
+
+        if parent, call waitpid()
+
+
+5. Pipe implementation
+    
+    parse command args for " | " and determine how many commands are listed
+
+    num_pipes[] -> size should be num commands-1 
+
+    create pipes -> for i in num_pipes[] , pipe()
+
+    for i in array[] 
+
+        pid = fork()
+
+        if child: 
+            
+            dup2() to duplicate file descriptors for reading and writing, use necessary flags depending on which ^^^
+
+            execv(args)
+
+        close(each pipe)
+
+        waitpid() -> wait for all child processes to finish
+
+    
+    **** figure out error checking for each system call
+
+
+6. Background processes
+
+    parse command args for & , indicating background processes
+
+    pid = fork() 
+
+    if child: 
+        
+        place child processes in process group, maybe something like setpgid()? read more about what that does...
+
+    if parent: 
+        
+        print pid of child
+
+        dont call wait(), defeats whole purpose of background processes
+
+    shell will remain in foreground
+
+
+
+    
+
+    
+        
+        
+
