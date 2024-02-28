@@ -5,6 +5,8 @@
 #include "../include/run_program.h"
 #include "../include/redirection.h"
 
+// part b, added to execute function
+
 int execute(char** args) {
     if (!args[0])
         return 1;

@@ -5,6 +5,8 @@
 
 #include "../include/resolve_path.h"
 
+// part b, function can resolve path for commands so shell can execute binaries in PATH without execvp()
+
 char* resolve_path(char* command) {
     char* path = getenv("PATH");
     char* pathcpy = strdup(path);

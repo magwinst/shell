@@ -6,6 +6,8 @@
 #include "../include/execute.h"
 #include "../include/msh_loop.h"
 
+// part b, fixed parsing to include spaces not new line
+
 void msh_loop() {
     
     char buffer[4096];

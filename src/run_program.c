@@ -5,6 +5,8 @@
 #include "../include/resolve_path.h"
 #include "../include/run_program.h"
 
+// part b, program can now execv binaries in path
+
 int run_program(char** args) {
     char* path = resolve_path(args[0]);
     if (!path) {

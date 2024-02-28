@@ -6,6 +6,7 @@
 #include "../include/redirection.h"
 #include "../include/resolve_path.h"
 
+// part b, messing around with offsetting or might have to design new parsing method to determine redirection commands
 
 int execute_output_redirection(char* output_file, char** args, int offset) {
     char* path = resolve_path(args[offset]);
