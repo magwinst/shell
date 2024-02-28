@@ -1,6 +1,3 @@
-#ifndef EXECUTE_H
-#define EXECUTE_H
+#pragma once
 
 int execute(char** args);
-
-#endif

@@ -1,0 +1,7 @@
+*** TODO ***
+
+immediate tasks: 
+
+    either refactor parsing function or build seperate parser to determine position of commands relative to redirection 
+
+

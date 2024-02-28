@@ -1,6 +1,4 @@
-#ifndef MSH_LOOP
-#define MSH_LOOP
+#pragma once
 
 void msh_loop();
 
-#endif

@@ -1,11 +1,10 @@
-#include "../include/msh_loop.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "../include/helpers.h"
 #include "../include/execute.h"
-
-
-// core shell loop (part A)
+#include "../include/msh_loop.h"
 
 void msh_loop() {
     
@@ -16,10 +15,13 @@ void msh_loop() {
     do {
         printf("msh-1.0$ ");
         fgets(buffer, sizeof(buffer), stdin);
-        array = parse(buffer, " \n");
+            size_t len = strlen(buffer);
+            if (len > 0 && buffer[len-1] == '\n')
+                buffer[len-1] = '\0';
+        array = parse(buffer, " ");
 
         if (!array)
-            exit(EXIT_FAILURE);
+            continue;
 
         status = execute(array);       
         free(array);

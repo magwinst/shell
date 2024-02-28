@@ -1,8 +1,9 @@
-#include "../include/builtins.h"
-#include "../include/execute.h"
 #include <string.h>
 
-// execute function, responsible for calling built-in commands or creating new processes (part A)
+#include "../include/builtins.h"
+#include "../include/execute.h"
+#include "../include/run_program.h"
+#include "../include/redirection.h"
 
 int execute(char** args) {
     if (!args[0])
@@ -13,6 +14,18 @@ int execute(char** args) {
             return builtin_commands[i].function(args);
     }
 
-    return 1;
+    for (int i = 0; args[i] != NULL; ++i) {
+        if (strcmp(args[i], "<")) {
+                execute_input_redirection(args[i-1], args, i+1);
+                return 1;
+        }
+        if (strcmp(args[i], ">")) {
+                execute_output_redirection(args[i+1], args, i-1);       
+                return 1;
+        }
+    }
+    
+    run_program(args);   
 
+    return 1;
 }

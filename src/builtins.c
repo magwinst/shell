@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include <stdio.h>
-#include "../include/builtins.h"
 
-// built-in commands implementation file (part A)
+#include "../include/builtins.h"
 
 int msh_cd(char** args) {
     if (!args[1])
