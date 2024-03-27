@@ -1,7 +1,8 @@
 #include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
 
-#include "../include/helpers.h"
+#include "../include/parsing.h"
 
 /*
     Function to break up a line (or any arbitrary string) into a memory allocated
@@ -18,7 +19,7 @@
     
     @return array : array of pointers to strings in line.
 */
-char** parse(char* line, const char delim[]){
+char** parse_helper(char* line, const char delim[]){
 
     char** array = (char**)malloc(sizeof(char*));
     *array=NULL;
@@ -49,6 +50,28 @@ char** parse(char* line, const char delim[]){
     }
 
     return array;
+}
+
+// part c, added new parse 
+
+char*** parse(char** commands) {
+    int num_commands = 0;
+    while (commands[num_commands]) {
+        num_commands++;
+    }
+    char*** args = malloc((num_commands+1) * sizeof(char**));
+
+    if (!args) {
+        perror("error: malloc failed when parsing command arguments");
+        exit(EXIT_FAILURE);
+    }
+
+    for (int i = 0; i < num_commands; ++i) {
+        args[i] = parse_helper(commands[i], " ");
+    }
+
+    args[num_commands] = NULL;
+    return args;
 }
 
 

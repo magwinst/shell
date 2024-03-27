@@ -1,3 +1,3 @@
 #pragma once
 
-int execute(char** args);
+int execute(char** args, int bg);

@@ -3,11 +3,14 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "../include/resolve_path.h"
-
-// part b, function can resolve path for commands so shell can execute binaries in PATH without execvp()
+#include "../include/resolve.h"
 
 char* resolve_path(char* command) {
+    if (command[0] == '/' || (command[0] == '.' && command[1] == '/')) {
+        if (!access(command, X_OK))
+            return command;
+    }
+   
     char* path = getenv("PATH");
     char* pathcpy = strdup(path);
     char* token = strtok(pathcpy, ":");
@@ -26,5 +29,24 @@ char* resolve_path(char* command) {
 
     free(pathcpy);
     return NULL;
+}
+
+char** resolve_args(char** args) {
+    int num_args = 0;
+    while (args[num_args]) {
+        num_args++;
+    }
+    char** new_args = malloc((num_args+1) * sizeof(char*));
+    
+    int i = 0;
+    while (args[i] && (strcmp(args[i], "<")) && (strcmp(args[i], ">"))) {
+        new_args[i] = args[i];
+        i++;
+    }
+
+    new_args[i] = NULL;
+
+    return new_args;
+    
 }
 
